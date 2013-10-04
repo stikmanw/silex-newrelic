@@ -40,9 +40,31 @@ class NewRelicServiceProvider implements ServiceProviderInterface
             return new Newrelic($app['newrelic.options']['exception_if_not_installed']);
         });
 
-        $app['newrelic.setup_module'] = $app->share(function($app) {
-            return new SetupModule(new IniConfigurator());
+        $app['newrelic.ini_configurator'] = $app->share(function($app) {
+            return new IniConfigurator();
         });
+
+        $app['newrelic.setup_module'] = $app->share(function($app) {
+            return new SetupModule($app['newrelic.ini_configurator']);
+        });
+    }
+
+    public function getDefaultOptions()
+    {
+        return array(
+            'exception_if_not_installed' => self::DEFAULT_EXCEPTION_IF_NOT_INSTALLED,
+            'transaction_name_method' => self::DEFAULT_TRANSACTION_NAME_METHOD,
+            'application_name' => self::DEFAULT_APPNAME,
+            'license' => self::DEFAULT_LICENSE,
+            'transaction_tracer_detail' => self::DEFAULT_TRANSACTION_TRACER_DETAIL,
+            'log_level' => self::DEFAULT_LOG_LEVEL,
+            'framework' => self::DEFAULT_FRAMEWORK,
+            'capture_params' => self::DEFAULT_CAPTURE_PARAMS,
+            'ignored_params' => self::DEFAULT_INGORED_PARAMS,
+            'auto_instrument' => self::DEFAULT_AUTO_INSTRUMENT,
+            'record_sql' => self::DEFAULT_RECORD_SQL,
+            'slow_sql' => self::DEFAULT_SLOW_SQL
+        );
     }
 
     protected function setDefaultOptions(Application $app)
@@ -52,27 +74,14 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         }
 
         $app['newrelic.options'] = array_merge(
-            array(
-                'exception_if_not_installed' => self::DEFAULT_EXCEPTION_IF_NOT_INSTALLED,
-                'transaction_name_method' => self::DEFAULT_TRANSACTION_NAME_METHOD,
-                'application_name' => self::DEFAULT_APPNAME,
-                'license' => self::DEFAULT_LICENSE,
-                'transaction_tracer_detail' => self::DEFAULT_TRANSACTION_TRACER_DETAIL,
-                'log_level' => self::DEFAULT_LOG_LEVEL,
-                'framework' => self::DEFAULT_FRAMEWORK,
-                'capture_params' => self::DEFAULT_CAPTURE_PARAMS,
-                'ignored_params' => self::DEFAULT_INGORED_PARAMS,
-                'auto_instrument' => self::DEFAULT_AUTO_INSTRUMENT,
-                'record_sql' => self::DEFAULT_RECORD_SQL,
-                'slow_sql' => self::DEFAULT_SLOW_SQL
-            ), $app['newrelic.options']
+            $this->getDefaultOptions(), 
+            $app['newrelic.options']
         );
     }
 
-
     protected function applyOptions(Application $app)
     {
-        $app['newrelic.setup_module']->applyOptions($app['newrelic.options']);
+        $app['newrelic.setup_module']->loadConfiguration($app['newrelic.options']);
     }
 
     protected function setupAfterMiddleware(Application $app)

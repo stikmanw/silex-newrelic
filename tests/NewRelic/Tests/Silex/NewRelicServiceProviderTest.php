@@ -12,14 +12,24 @@ namespace NewRelic\Tests\Silex;
 
 use Silex\Application;
 use NewRelic\Silex\NewRelicServiceProvider;
+use Mockery as m;
 
 class NewRelicServiceProviderTest extends TestCase
 {
     public function testRegister()
     {
-        $app = new Application();
-        $app->register(new NewRelicServiceProvider());
+        $provider = new NewRelicServiceProvider();
 
-        $this->assertInstanceOf('Mandango\Mondator\Mondator', $app['newrelic']);
+        $app = new Application();
+        $app->register($provider);
+        $app['newrelic.options'] = array('exception_if_not_installed' => false);
+
+        $this->assertInstanceOf('NewRelic\Silex\IniConfigurator', $app['newrelic.ini_configurator']);
+        $this->assertInstanceOf('NewRelic\Silex\SetupModule', $app['newrelic.setup_module']);
+
+        $app['newrelic.setup_module'] = m::mock('NewRelic\Silex\SetupModule');
+        $app['newrelic.setup_module']->shouldReceive('loadConfiguration');
+
+        $this->assertInstanceOf('Intouch\Newrelic\Newrelic', $app['newrelic']);
     }
 }
