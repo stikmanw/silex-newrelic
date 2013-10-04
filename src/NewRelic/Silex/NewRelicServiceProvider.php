@@ -68,7 +68,7 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         );
     }
 
-    protected function setDefaultOptions(Application $app)
+    public function setDefaultOptions(Application $app)
     {
         if (!isset($app['newrelic.options'])) {
             $app['newrelic.options'] = array();
@@ -80,12 +80,12 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         );
     }
 
-    protected function applyOptions(Application $app)
+    public function applyOptions(Application $app)
     {
         $app['newrelic.setup_module']->loadConfiguration($app['newrelic.options']);
     }
 
-    protected function setupAfterMiddleware(Application $app)
+    public function setupAfterMiddleware(Application $app)
     {
         $app->after(function (Request $request, Response $response) use ($app) {
             switch ($app['newrelic.options']['transaction_name_method']) {
