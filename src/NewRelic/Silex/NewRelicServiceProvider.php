@@ -32,10 +32,11 @@ class NewRelicServiceProvider implements ServiceProviderInterface
 
     public function register(Application $app)
     {
-        $app['newrelic'] = $app->share(function($app) {
-            $this->setDefaultOptions($app);
-            $this->applyOptions($app);
-            $this->setupAfterMiddleware($app);
+        $self = $this;
+        $app['newrelic'] = $app->share(function($app) use ($self) {
+            $self->setDefaultOptions($app);
+            $self->applyOptions($app);
+            $self->setupAfterMiddleware($app);
 
             return new Newrelic($app['newrelic.options']['exception_if_not_installed']);
         });
