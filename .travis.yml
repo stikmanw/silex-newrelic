@@ -4,11 +4,7 @@ php:
   - 5.3
   - 5.4
 
-services: mongodb
-
 before_script:
-  - printf "\n" | pecl install -f mongo-1.3.6
-  - printf "\n" | pecl install yaml
   - composer --dev --prefer-source install
 
 script: phpunit
