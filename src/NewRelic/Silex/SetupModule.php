@@ -17,9 +17,7 @@ class SetupModule
     private $optionsMapping = array(
         'transaction_tracer_detail' => 'newrelic.transaction_tracer.detail',
         'capture_params' => 'newrelic.capture_params',
-        'ignored_params' => 'newrelic.ignored_params',
-        'record_sql' => 'newrelic.transaction_tracer.record_sql',
-        'slow_sql' => 'newrelic.transaction_tracer.slow_sql'
+        'ignored_params' => 'newrelic.ignored_params'
     );
 
     private $configurator;

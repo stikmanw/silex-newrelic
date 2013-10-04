@@ -25,8 +25,6 @@ class NewRelicServiceProvider implements ServiceProviderInterface
     const DEFAULT_TRANSACTION_TRACER_DETAIL = 1;
     const DEFAULT_CAPTURE_PARAMS = false;
     const DEFAULT_INGORED_PARAMS = '';
-    const DEFAULT_RECORD_SQL = 'off';
-    const DEFAULT_SLOW_SQL = true;
     const DEFAULT_TRANSACTION_NAME = 'none';
 
     public function __construct( $throw = false )
@@ -69,8 +67,6 @@ class NewRelicServiceProvider implements ServiceProviderInterface
             'transaction_tracer_detail' => self::DEFAULT_TRANSACTION_TRACER_DETAIL,
             'capture_params' => self::DEFAULT_CAPTURE_PARAMS,
             'ignored_params' => self::DEFAULT_INGORED_PARAMS,
-            'record_sql' => self::DEFAULT_RECORD_SQL,
-            'slow_sql' => self::DEFAULT_SLOW_SQL,
             'disable_auto_rum' => self::DEFAULT_DISABLE_AUTO_RUM
         );
     }
