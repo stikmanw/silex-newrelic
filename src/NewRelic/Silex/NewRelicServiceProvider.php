@@ -17,6 +17,8 @@ use Intouch\Newrelic\Newrelic;
 
 class NewRelicServiceProvider implements ServiceProviderInterface
 {
+    protected $installed;
+
     const DEFAULT_APPNAME = 'Silex PHP Application';
     const DEFAULT_TRANSACTION_NAME_METHOD = 'uri';
     const DEFAULT_LICENSE = null;
@@ -29,14 +31,23 @@ class NewRelicServiceProvider implements ServiceProviderInterface
     const DEFAULT_RECORD_SQL = 'off';
     const DEFAULT_SLOW_SQL = true;
     const DEFAULT_EXCEPTION_IF_NOT_INSTALLED = false;
+    const DEFAULT_TRANSACTION_NAME = 'none';
+
+    public function __construct( $throw = false )
+    {
+        $this->installed = extension_loaded('newrelic') && function_exists('newrelic_set_appname');
+    }
 
     public function register(Application $app)
     {
+        if (!$this->installed) {
+            return;
+        }
+
         $self = $this;
         $app['newrelic'] = $app->share(function($app) use ($self) {
             $self->setDefaultOptions($app);
             $self->applyOptions($app);
-            $self->setupAfterMiddleware($app);
 
             return new Newrelic($app['newrelic.options']['exception_if_not_installed']);
         });
@@ -48,6 +59,10 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         $app['newrelic.setup_module'] = $app->share(function($app) {
             return new SetupModule($app['newrelic.ini_configurator']);
         });
+        
+        if (!isset($app['newrelic.options'])) {
+            $app['newrelic.options'] = array();
+        }
     }
 
     public function getDefaultOptions()
@@ -70,14 +85,11 @@ class NewRelicServiceProvider implements ServiceProviderInterface
 
     public function setDefaultOptions(Application $app)
     {
-        if (!isset($app['newrelic.options'])) {
-            $app['newrelic.options'] = array();
-        }
-
         $app['newrelic.options'] = array_merge(
             $this->getDefaultOptions(), 
             $app['newrelic.options']
         );
+
     }
 
     public function applyOptions(Application $app)
@@ -85,9 +97,9 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         $app['newrelic.setup_module']->loadConfiguration($app['newrelic.options']);
     }
 
-    public function setupAfterMiddleware(Application $app)
+    protected function setupAfterMiddleware(Application $app)
     {
-        $app->after(function (Request $request, Response $response) use ($app) {
+        $app->after(function (Request $request, Response $response) use ($app){
             switch ($app['newrelic.options']['transaction_name_method']) {
                 case 'route':
                     $name = $request->attributes->get('_route');
@@ -97,12 +109,21 @@ class NewRelicServiceProvider implements ServiceProviderInterface
                     $name = $request->getRequestUri();
                     break;
             }
-            
+
+            if (!$name) {
+                $name = self::DEFAULT_TRANSACTION_NAME;
+            }
+
             $app['newrelic']->nameTransaction($name);
         });
     }
 
     public function boot(Application $app)
     {
+        if (!$this->installed) {
+            return;
+        }
+
+        $this->setupAfterMiddleware($app);
     }
 }
