@@ -22,7 +22,6 @@ class NewRelicServiceProviderTest extends TestCase
 
         $app = new Application();
         $app->register($provider);
-        $app['newrelic.options'] = array('exception_if_not_installed' => false);
 
         $this->assertInstanceOf('NewRelic\Silex\IniConfigurator', $app['newrelic.ini_configurator']);
         $this->assertInstanceOf('NewRelic\Silex\SetupModule', $app['newrelic.setup_module']);

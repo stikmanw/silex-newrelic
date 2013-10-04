@@ -28,7 +28,7 @@ class NewRelicServiceProvider implements ServiceProviderInterface
     const DEFAULT_AUTO_INSTRUMENT = 1;
     const DEFAULT_RECORD_SQL = 'off';
     const DEFAULT_SLOW_SQL = true;
-    const DEFAULT_EXCEPTION_IF_NOT_INSTALLED = true;
+    const DEFAULT_EXCEPTION_IF_NOT_INSTALLED = false;
 
     public function register(Application $app)
     {
