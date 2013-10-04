@@ -15,14 +15,9 @@ use UnexpectedValueException;
 class SetupModule
 {
     private $optionsMapping = array(
-        'application_name' => 'newrelic.appname',
-        'license' => 'newrelic.license',
         'transaction_tracer_detail' => 'newrelic.transaction_tracer.detail',
-        'log_level' => 'newrelic.loglevel',
-        'framework' => 'newrelic.framework',
         'capture_params' => 'newrelic.capture_params',
         'ignored_params' => 'newrelic.ignored_params',
-        'auto_instrument' => 'newrelic.browser_monitoring.auto_instrument',
         'record_sql' => 'newrelic.transaction_tracer.record_sql',
         'slow_sql' => 'newrelic.transaction_tracer.slow_sql'
     );

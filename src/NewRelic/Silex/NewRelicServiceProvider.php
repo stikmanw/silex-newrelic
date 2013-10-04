@@ -21,16 +21,12 @@ class NewRelicServiceProvider implements ServiceProviderInterface
 
     const DEFAULT_APPNAME = 'Silex PHP Application';
     const DEFAULT_TRANSACTION_NAME_METHOD = 'uri';
-    const DEFAULT_LICENSE = null;
+    const DEFAULT_DISABLE_AUTO_RUM = false;
     const DEFAULT_TRANSACTION_TRACER_DETAIL = 1;
-    const DEFAULT_LOG_LEVEL = 'info';
-    const DEFAULT_FRAMEWORK = 'no_framework';
     const DEFAULT_CAPTURE_PARAMS = false;
     const DEFAULT_INGORED_PARAMS = '';
-    const DEFAULT_AUTO_INSTRUMENT = 1;
     const DEFAULT_RECORD_SQL = 'off';
     const DEFAULT_SLOW_SQL = true;
-    const DEFAULT_EXCEPTION_IF_NOT_INSTALLED = false;
     const DEFAULT_TRANSACTION_NAME = 'none';
 
     public function __construct( $throw = false )
@@ -68,18 +64,14 @@ class NewRelicServiceProvider implements ServiceProviderInterface
     public function getDefaultOptions()
     {
         return array(
-            'exception_if_not_installed' => self::DEFAULT_EXCEPTION_IF_NOT_INSTALLED,
             'transaction_name_method' => self::DEFAULT_TRANSACTION_NAME_METHOD,
             'application_name' => self::DEFAULT_APPNAME,
-            'license' => self::DEFAULT_LICENSE,
             'transaction_tracer_detail' => self::DEFAULT_TRANSACTION_TRACER_DETAIL,
-            'log_level' => self::DEFAULT_LOG_LEVEL,
-            'framework' => self::DEFAULT_FRAMEWORK,
             'capture_params' => self::DEFAULT_CAPTURE_PARAMS,
             'ignored_params' => self::DEFAULT_INGORED_PARAMS,
-            'auto_instrument' => self::DEFAULT_AUTO_INSTRUMENT,
             'record_sql' => self::DEFAULT_RECORD_SQL,
-            'slow_sql' => self::DEFAULT_SLOW_SQL
+            'slow_sql' => self::DEFAULT_SLOW_SQL,
+            'disable_auto_rum' => self::DEFAULT_DISABLE_AUTO_RUM
         );
     }
 
@@ -118,12 +110,24 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         });
     }
 
+    protected function configureNewRelic()
+    {
+        if ($app['newrelic.options']['disable_auto_rum']) {
+            $app['newrelic']->disableAutoRUM();
+        }
+
+        if ($app['newrelic.options']['application_name']) {
+            $app['newrelic']->setAppName($app['newrelic.options']['application_name']);
+        }
+    }
+
     public function boot(Application $app)
     {
         if (!$this->installed) {
             return;
         }
 
+        $this->configureNewRelic();
         $this->setupAfterMiddleware($app);
     }
 }
