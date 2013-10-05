@@ -20,6 +20,12 @@ class NewRelicServiceProviderTest extends TestCase
     {
         $provider = new NewRelicServiceProvider();
 
+        if (!extension_loaded('newrelic')) {
+            $this->markTestSkipped(
+              'The newrelic extension is not available.'
+            );
+        }
+
         $app = new Application();
         $app->register($provider);
 
