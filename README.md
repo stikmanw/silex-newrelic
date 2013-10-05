@@ -14,12 +14,12 @@ Installation
 ------------
 
 The recommended way to install NewRelic/Silex is [through composer](http://getcomposer.org).
-You can see [the package information on Packagist.](https://packagist.org/packages/yunait/silex-newrelic)
+You can see [the package information on Packagist.](https://packagist.org/packages/mcuadros/silex-newrelic)
 
 ```JSON
 {
     "require": {
-        "yunait/silex-newrelic": "dev-master"
+        "mcuadros/silex-newrelic": "dev-master"
     }
 }
 ```
