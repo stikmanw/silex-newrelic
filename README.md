@@ -1,4 +1,4 @@
-NewRelic Silex Provider [![Build Status](https://travis-ci.org/mcuadros/newrelic-silex.png?branch=master)](https://travis-ci.org/mcuadros/newrelic-silex)
+NewRelic Silex Provider [![Build Status](https://travis-ci.org/mcuadros/silex-newrelic.png?branch=master)](https://travis-ci.org/mcuadros/silex-newrelic)
 ==============================
 
 Integrate the [NewRelic PHP Agent API](https://newrelic.com/docs/php/the-php-api) into Silex framework
@@ -14,12 +14,12 @@ Installation
 ------------
 
 The recommended way to install NewRelic/Silex is [through composer](http://getcomposer.org).
-You can see [the package information on Packagist.](https://packagist.org/packages/yunait/newrelic-silex)
+You can see [the package information on Packagist.](https://packagist.org/packages/yunait/silex-newrelic)
 
 ```JSON
 {
     "require": {
-        "yunait/newrelic-silex": "dev-master"
+        "yunait/silex-newrelic": "dev-master"
     }
 }
 ```
