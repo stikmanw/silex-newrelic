@@ -36,5 +36,7 @@ class NewRelicServiceProviderTest extends TestCase
         $app['newrelic.setup_module']->shouldReceive('loadConfiguration');
 
         $this->assertInstanceOf('Intouch\Newrelic\Newrelic', $app['newrelic']);
+
+        $provider->boot($app);
     }
 }
