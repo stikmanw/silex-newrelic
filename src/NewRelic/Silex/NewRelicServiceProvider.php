@@ -43,7 +43,7 @@ class NewRelicServiceProvider implements ServiceProviderInterface
             $self->setDefaultOptions($app);
             $self->applyOptions($app);
 
-            return new Newrelic($app['newrelic.options']['exception_if_not_installed']);
+            return new Newrelic(@$app['newrelic.options']['exception_if_not_installed']);
         });
 
         $app['newrelic.ini_configurator'] = $app->share(function($app) {
@@ -106,9 +106,9 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         });
     }
 
-    protected function configureNewRelic()
+    protected function configureNewRelic(Application $app)
     {
-        if ($app['newrelic.options']['disable_auto_rum']) {
+        if (@$app['newrelic.options']['disable_auto_rum']) {
             $app['newrelic']->disableAutoRUM();
         }
 
@@ -123,7 +123,7 @@ class NewRelicServiceProvider implements ServiceProviderInterface
             return;
         }
 
-        $this->configureNewRelic();
+        $this->configureNewRelic($app);
         $this->setupAfterMiddleware($app);
     }
 }
