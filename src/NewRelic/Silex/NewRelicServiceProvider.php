@@ -108,11 +108,17 @@ class NewRelicServiceProvider implements ServiceProviderInterface
 
     protected function configureNewRelic(Application $app)
     {
-        if ($app['newrelic.options']['disable_auto_rum']) {
+        if (
+            isset($app['newrelic.options']['disable_auto_rum']) &&
+            $app['newrelic.options']['disable_auto_rum']
+        ) {
             $app['newrelic']->disableAutoRUM();
         }
 
-        if ($app['newrelic.options']['application_name']) {
+        if (
+            isset($app['newrelic.options']['application_name']) &&
+            $app['newrelic.options']['application_name']
+        ) {
             $app['newrelic']->setAppName($app['newrelic.options']['application_name']);
         }
     }
