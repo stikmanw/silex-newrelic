@@ -17,7 +17,7 @@
     "require-dev": {
         "mockery/mockery": "0.8.0",
         "phpunit/phpunit": "3.7.*",
-        "silex/silex": "1.0.*@dev"
+        "silex/silex": "*"
     },
     "autoload": {
         "psr-0": {
