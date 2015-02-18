@@ -99,7 +99,7 @@ class NewRelicServiceProvider implements ServiceProviderInterface
             }
 
             if (!$name) {
-                $name = self::DEFAULT_TRANSACTION_NAME;
+                $name = NewRelicServiceProvider::DEFAULT_TRANSACTION_NAME;
             }
 
             $app['newrelic']->nameTransaction($name);
