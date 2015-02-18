@@ -7,7 +7,7 @@ Requirements
 ------------
 
 * PHP 5.3.x
-* intouch/newrelic
+* [intouch/newrelic](https://github.com/In-Touch/newrelic)
 * newrelic >= 3.1
 
 Installation
