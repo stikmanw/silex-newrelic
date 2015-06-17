@@ -30,12 +30,6 @@ class NewRelicServiceProviderTest extends TestCase
         $app = new Application();
         $app->register($provider);
 
-        $this->assertInstanceOf('NewRelic\Silex\IniConfigurator', $app['newrelic.ini_configurator']);
-        $this->assertInstanceOf('NewRelic\Silex\SetupModule', $app['newrelic.setup_module']);
-
-        $app['newrelic.setup_module'] = m::mock('NewRelic\Silex\SetupModule');
-        $app['newrelic.setup_module']->shouldReceive('loadConfiguration');
-
         $this->assertInstanceOf('Intouch\Newrelic\Newrelic', $app['newrelic']);
 
         $provider->boot($app);
