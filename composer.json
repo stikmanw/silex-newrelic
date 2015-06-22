@@ -1,5 +1,5 @@
 {
-    "name": "mcuadros/silex-newrelic",
+    "name": "stikmanw/silex-newrelic",
     "type": "library",
     "description": "Integrate the NewRelic PHP API into Silex framework",
     "license": "MIT",
@@ -7,6 +7,10 @@
         {
             "name": "Máximo Cuadros", 
             "email": "mcuadros@gmail.com"
+        },
+        {
+            "name": "Ben Carter",
+            "email": "ben.carter.dev@gmail.com"
         }
     ],
     "minimum-stability": "dev",
