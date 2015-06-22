@@ -12,7 +12,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0",
-        "intouch/newrelic": "1.0.2",
+        "intouch/newrelic": "~1.0",
         "silex/silex": "~1.0"
     },
     "require-dev": {
