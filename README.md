@@ -1,4 +1,4 @@
-NewRelic Silex Provider [![Build Status](https://travis-ci.org/mcuadros/silex-newrelic.png?branch=master)](https://travis-ci.org/mcuadros/silex-newrelic)
+NewRelic Silex Provider [![Build Status](https://travis-ci.org/stikmanw/silex-newrelic.svg?branch=master)](https://travis-ci.org/stikmanw/silex-newrelic)
 ==============================
 Integrate the [NewRelic PHP Agent API](https://newrelic.com/docs/php/the-php-api) into Silex framework. This was originally created by [mcuadros](https://github.com/mcuadros).  Credit goes to him for his hardwork. 
 
