@@ -35,6 +35,7 @@ Methods
 * ```newrelic.custom_parameter``` ( string $key, $value ): Assign a custom parameter to be captured for the request by NewRelic Agent. Details: [NewRelic custom_parameter](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-api#api-custom-param)
 * ```newrelic.custom_metric``` (string $name, mixed $value): Assign a metric name and value to be captured by NewRelic Agent. 
 Details: [NewRelic custom_metric](https://docs.newrelic.com/docs/agents/php-agent/configuration/php-agent-api#api-custom-metric)
+
 Parameters
 ------------
 
