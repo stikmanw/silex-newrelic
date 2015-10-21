@@ -24,14 +24,12 @@ Installation
 ------------
 
 The recommended way to install NewRelic/Silex is [through composer](http://getcomposer.org).
-You can see [the package information on Packagist.](https://packagist.org/packages/mcuadros/silex-newrelic)
+You can see [the package information on Packagist.](https://packagist.org/packages/stikmanw/silex-newrelic)
 
-```JSON
-{
-    "require": {
-        "stikmanw/silex-newrelic": "^v1.0"
-    }
-}
+Run ```composer require``` to get the latest version:
+
+```Shell
+composer require stikmanw/silex-newrelic
 ```
 
 Methods
