@@ -112,6 +112,10 @@ class NewRelicServiceProvider implements ServiceProviderInterface
 
             $app['newrelic']->nameTransaction($name);
         });
+        
+        $app->error(function (\Exception $e) use ($app) {
+            $app['newrelic']->noticeError($e->getMessage(), $e);
+        });
     }
 
     /**
