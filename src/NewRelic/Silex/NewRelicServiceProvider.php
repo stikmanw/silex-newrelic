@@ -114,6 +114,13 @@ class NewRelicServiceProvider implements ServiceProviderInterface
         });
         
         $app->error(function (\Exception $e) use ($app) {
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+                if ($e->getStatusCode() >= 400 && $e->getStatusCode() < 500) {
+                    // Ignore client-side errors
+                    return;
+                }
+            }
+
             $app['newrelic']->noticeError($e->getMessage(), $e);
         });
     }
